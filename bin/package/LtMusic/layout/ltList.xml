@@ -14,8 +14,8 @@
 		<method_def>
 			<AddItem file="ltList.lua" func="Add_Item" />
 			<DelItem file="ltList.lua" func="Del_Item" />
-			<GetNext file="ltList.lua" func="Get_Next" />
-			<GetPre  file="ltList.lua" func="Get_Pre" />
+			<GetNext file="ltList.lua" func="Turn_Next" />
+			<GetPre  file="ltList.lua" func="Trun_Pre" />
 			<SaveAll file="ltList.lua" func="Save_All" />
 			<GetItem file="ltList.lua" func="Get_Item_Val" />
 		</method_def>

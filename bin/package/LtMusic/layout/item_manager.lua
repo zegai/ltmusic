@@ -181,6 +181,13 @@ local function get_item_udata_( pos )
 	return 'nil'
 end
 
+local function get_item_( pos )
+	if local_items_[pos] then
+		return local_items_[pos].item_user_
+	end
+	return 'nil'
+end
+
 local function set_serialization_func_( handle )
 	assert( handle.decode and handle.encode )
 	local_set_.serialization_func_ = handle
@@ -204,6 +211,7 @@ manager.get_save = read_info_
 manager.set_serialization = set_serialization_func_
 
 manager.get_item_value = get_item_udata_
+manager.get_item  = get_item_
 manager.get_item_index = get_item_index_
 
 return manager

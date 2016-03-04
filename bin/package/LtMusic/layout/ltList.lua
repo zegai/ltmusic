@@ -135,22 +135,26 @@ function Reverse_Save( self )
 	end
 end
 
-function Get_Next( self )
+function Turn_Next( self )
 	if user_set_._item_count == 0 then return nil end
 	local count = manager.get_item_index( user_set_._local_click )
 	if count == user_set_._item_count then
-		return manager.get_item_value( 1 )
+		user_set_._local_click = manager.get_item(1)
+		return user_set_._local_click.item_user_
 	end
-	return manager.get_item_value(count + 1)
+	user_set_._local_click = manager.get_item(count + 1)
+	return user_set_._local_click.item_user_
 end
 
-function Get_Pre( self , item)
+function Trun_Pre( self , item)
 	if user_set_._item_count == 0 then return nil end
 	local count = manager.get_item_index( user_set_._local_click )
 	if count == 1 then
-		return manager.get_item_value( user_set_._item_count )
+		user_set_._local_click = manager.get_item(1)
+		return user_set_._local_click.item_user_
 	end
-	return  manager.get_item_value(count - 1)
+	user_set_._local_click = manager.get_item(count - 1)
+	return  user_set_._local_click.item_user_
 end
 
 
