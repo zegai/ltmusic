@@ -1,0 +1,378 @@
+<!--XML最好存储为UTF-8编码-->
+<xlue>
+	<animation_def class="time.ani">
+         <method_def>
+            <Action>
+            	local arg = {...}
+                local self = arg[1]
+                local attr = self:GetAttribute()
+                local runningTime = self:GetRuningTime()
+                if runningTime > 950 then
+                	attr.func(self);
+                end
+            </Action>
+         </method_def>
+    </animation_def> 
+   <animationtemplate id="def.ani" class="time.ani">
+             <attr>
+                  <totaltime>1000</totaltime>
+                  <loop>true</loop> 
+             </attr>
+  </animationtemplate>
+<objtreetemplate id="ltui.Tree">
+	<attr>
+			<left>-200</left>
+			<top>-200</top>
+			<width>2000</width>
+			<height>2000</height>
+	</attr>
+	<!--标题栏，可以模拟App的Titlebar-->
+	<obj id="id.app.border" class="TextureObject">
+		<attr>
+			<left>0</left>
+			<top>0</top>
+			<width>650</width>
+			<height>220</height>
+			<!--资源相关的属性使用资源定义xml中设置的资源名-->
+			<texture>bkg.border</texture>
+			<alpha>160</alpha>
+			<limitchild>1</limitchild>
+		</attr>
+		<children>
+			<obj id="title" class="CaptionObject">
+				<attr>
+					<left>0</left>
+					<top>0</top>
+					<height>32</height>
+					<width>father.width-50</width>
+				</attr>
+				<children>
+					<obj id="title.text" class="TextObject">
+						<attr>
+							<left>30</left> 
+							<top>16</top>
+							<width>86</width>
+							<height>24</height>			
+							<text>SBPlayer</text>
+							<textcolor>system.white</textcolor>
+							<font>system.bottom</font>
+						</attr>
+					</obj>
+				</children>
+			</obj>
+			<obj id="id.main.bkg" class="ImageObject">
+				<attr>
+					<left>16</left>
+					<top>10</top>
+					<width>father.width-66</width>
+					<height>father.height-32</height>
+					<!--资源相关的属性使用资源定义xml中设置的资源名-->
+					<image>main.bkg</image>
+					
+					<limitchild>1</limitchild>
+				</attr>
+				<!-- 头像区 -->
+				<children>
+					<obj id="id.main.left.touxiang.mask" class="MaskObject">
+						<attr>
+							<left>15</left>
+							<top>25</top>
+							<width>72</width>
+							<height>72</height>
+							<stretchbitmap>1</stretchbitmap>
+							<chanel>r</chanel>
+							<resid>main.left.touxiang.mask</resid>
+							<type>bitmap</type>
+							<maskorgx>0</maskorgx>
+							<maskorgy>0</maskorgy>
+							<masksizex>72</masksizex>
+							<masksizey>72</masksizey>
+							<limitchild>1</limitchild>
+						</attr>
+						<children>
+							<obj id="id.main.left.touxiang.bkg" class="ImageObject">
+								<attr>
+									<left>0</left>
+									<top>0</top>
+									<width>72</width>
+									<height>72</height>
+									<image>main.left.touxiang.bkg</image>
+									<drawmode>0</drawmode>
+								</attr>
+							</obj>
+							<obj id="id.touxiang.lian" class="ImageObject">
+								<attr>
+									<left>0</left>
+									<top>0</top>
+									<width>father.width</width>
+									<height>father.height</height>
+									<image>ceshi</image>
+									<inheritmask>1</inheritmask>
+									<maskleft>0</maskleft>
+									<masktop>0</masktop>
+									<maskwidth>father.width</maskwidth>
+									<maskheight>father.height</maskheight>
+									<maskblendtype>attenunate</maskblendtype>
+									<drawmode>0</drawmode>
+								</attr>
+							</obj>
+						</children>
+					</obj>
+					<obj id="id.text.name" class="TextObject">
+						<attr>
+							<left>100</left> 
+							<top>52</top>
+							<width>150</width>
+							<height>24</height>			
+							<text>SB蔚蓝</text>
+							<textcolor>system.white</textcolor>
+							<font>system.bottom</font>
+						</attr>
+					</obj>
+					<obj id="music.pre.btn" class="ltui.button">
+						<attr>
+							<left>235</left>
+							<top>25</top>
+							<width>72</width>
+							<height>72</height>
+							<NormalBkgID>main.prenormal</NormalBkgID>
+							<DownBkgID>main.prehover</DownBkgID>
+							<DisableBkgID>main.prenomal</DisableBkgID>
+							<HoverBkgID>main.prehover</HoverBkgID>
+						</attr>
+						<eventlist>
+							<event name="OnClick" file="MainWnd.xml.lua" func="close_btn_OnLButtonDown"/>
+						</eventlist>
+					</obj>
+					<obj id="music.play.btn" class="ltui.button">
+						<attr>
+							<left>315</left>
+							<top>25</top>
+							<width>72</width>
+							<height>72</height>
+							<NormalBkgID>main.playnormal</NormalBkgID>
+							<DownBkgID>main.playhover</DownBkgID>
+							<DisableBkgID>main.playnormal</DisableBkgID>
+							<HoverBkgID>main.playhover</HoverBkgID>
+						</attr>
+						<eventlist>
+							<event name="OnClick" file="MainWnd.xml.lua" func="play_item"/>
+						</eventlist>
+					</obj>
+					<obj id="music.pause.btn" class="ltui.button">
+						<attr>
+							<left>315</left>
+							<top>25</top>
+							<width>72</width>
+							<height>72</height>
+							<NormalBkgID>main.stopnormal</NormalBkgID>
+							<DownBkgID>main.stophover</DownBkgID>
+							<DisableBkgID>main.stopnormal</DisableBkgID>
+							<HoverBkgID>main.stophover</HoverBkgID>
+						</attr>
+						<eventlist>
+							<event name="OnClick" file="MainWnd.xml.lua" func="pause_item"/>
+						</eventlist>
+					</obj>
+					<obj id="music.next.btn" class="ltui.button">
+						<attr>
+							<left>395</left>
+							<top>25</top>
+							<width>72</width>
+							<height>72</height>
+							<NormalBkgID>main.nextnormal</NormalBkgID>
+							<DownBkgID>main.nexthover</DownBkgID>
+							<DisableBkgID>main.nextnormal</DisableBkgID>
+							<HoverBkgID>main.nexthover</HoverBkgID>
+						</attr>
+						<eventlist>
+							<event name="OnClick" file="MainWnd.xml.lua" func="close_btn_OnLButtonDown"/>
+						</eventlist>
+					</obj>
+					<obj id="time.text.use" class="TextObject">
+						<attr>
+							<left>155</left> 
+							<top>120</top>
+							<width>40</width>
+							<height>24</height>			
+							<text>00:00</text>
+							<textcolor>system.white</textcolor>
+							<font>system.bottom</font>
+						</attr>
+					</obj>
+					<obj id="music.scoller" class="ltui.UserScroll">
+						<attr>
+							<left>200</left>
+							<top>120</top>
+							<width>320</width>
+							<height>16</height>
+						</attr>
+						<eventlist>
+							<event name="OnClick" file="MainWnd.xml.lua" func="close_btn_OnLButtonDown"/>
+						</eventlist>
+					</obj>
+					<obj id="time.text.full" class="TextObject">
+						<attr>
+							<left>530</left> 
+							<top>120</top>
+							<width>40</width>
+							<height>24</height>			
+							<text>00:00</text>
+							<textcolor>system.white</textcolor>
+							<font>system.bottom</font>
+						</attr>
+					</obj>
+					<obj id="hide.area" class="FillObject">
+						<attr>
+							<left>0</left>
+							<top>180</top>
+							<width>father.width</width>
+							<height>200</height>
+							<alpha>0</alpha>
+							<limitchild>1</limitchild>
+						</attr>
+						<children>
+							<obj id="id.func.list" class="ltui.ltList">
+								<attr>
+									<left>50</left>
+									<top>10</top>
+									<width>500</width>
+									<height>150</height>
+									<limitchild>1</limitchild>
+								</attr>
+								<eventlist>
+									<event name="OnItemDBClick" file="MainWnd.xml.lua" func="OnListDBClick"/>
+								</eventlist>
+								<children>
+									<obj id="LIST_C" class="FillObject">
+										<attr>
+											<left>0</left>
+											<top>0</top>
+											<width>0</width>
+											<height>0</height>
+											<srccolor>ltbule</srccolor>
+										</attr>
+									</obj>
+								</children>
+							</obj>
+						</children>
+					</obj>
+					
+				</children>
+			</obj>
+			<obj id="right_btn" class="FillObject">
+				<attr>
+					<left>father.width-50</left>
+					<top>10</top>
+					<width>34</width>
+					<height>father.height-32</height>
+					<alpha>180</alpha>
+					<limitchild>1</limitchild>
+				</attr>
+				<children>
+					<obj id="close.btn" class="ltui.button">
+						<attr>
+							<left>3</left>
+							<top>0</top>
+							<width>28</width>
+							<height>28</height>
+							<NormalBkgID>menu.close.normal</NormalBkgID>
+							<DownBkgID>menu.close.down</DownBkgID>
+							<DisableBkgID>menu.close.disable</DisableBkgID>
+							<HoverBkgID>menu.close.hover</HoverBkgID>
+						</attr>
+						<eventlist>
+							<event name="OnClick" file="MainWnd.xml.lua" func="close_btn_OnLButtonDown"/>
+						</eventlist>
+					</obj>
+					<obj id="music.define.btn" class="ltui.button">
+						<attr>
+							<left>3</left>
+							<top>75</top>
+							<width>28</width>
+							<height>28</height>
+							<NormalBkgID>menu.define.normal</NormalBkgID>
+							<DownBkgID>menu.define.down</DownBkgID>
+							<DisableBkgID>menu.define.disable</DisableBkgID>
+							<HoverBkgID>menu.define.hover</HoverBkgID>
+						</attr>
+						<eventlist>
+							<event name="OnClick" file="MainWnd.xml.lua" func="save_items"/>
+						</eventlist>
+					</obj>
+					<obj id="music.playmode.btn" class="ltui.button">
+						<attr>
+							<left>3</left>
+							<top>110</top>
+							<width>28</width>
+							<height>28</height>
+							<NormalBkgID>menu.tip.normal</NormalBkgID>
+							<DownBkgID>menu.tip.down</DownBkgID>
+							<DisableBkgID>menu.tip.disable</DisableBkgID>
+							<HoverBkgID>menu.tip.hover</HoverBkgID>
+						</attr>
+						<eventlist>
+							<event name="OnClick" file="MainWnd.xml.lua" func="btn_show"/>
+						</eventlist>
+					</obj>
+					<obj id="music.list.btn" class="ltui.button">
+						<attr>
+							<left>3</left>
+							<top>145</top>
+							<width>28</width>
+							<height>28</height>
+							<NormalBkgID>menu.openlist.normal</NormalBkgID>
+							<DownBkgID>menu.openlist.down</DownBkgID>
+							<DisableBkgID>menu.openlist.disable</DisableBkgID>
+							<HoverBkgID>menu.openlist.hover</HoverBkgID>
+						</attr>
+						<eventlist>
+							<event name="OnClick" file="MainWnd.xml.lua" func="btn_show"/>
+						</eventlist>
+					</obj>
+					<obj id="music.add.btn" class="ltui.button">
+						<attr>
+							<left>5</left>
+							<top>190</top>
+							<width>28</width>
+							<height>28</height>
+							<NormalBkgID>menu.add.normal</NormalBkgID>
+							<DownBkgID>menu.add.down</DownBkgID>
+							<DisableBkgID>menu.add.disable</DisableBkgID>
+							<HoverBkgID>menu.add.hover</HoverBkgID>
+						</attr>
+						<eventlist>
+							<event name="OnClick" file="MainWnd.xml.lua" func="add_item"/>
+						</eventlist>
+					</obj>
+				</children>
+			</obj>
+		</children>
+		<eventlist>
+			<event name="OnInitControl"/>
+		</eventlist>
+	</obj>
+</objtreetemplate>
+	
+<hostwndtemplate id="ltui.Wnd" class="FrameHostWnd">
+		<attr> 
+			<title>Bolt</title>
+			<layered>1</layered>
+			<left>200</left> 
+			<top>100</top>
+			<width>750</width>
+			<height>1000</height>
+			<topmost>0</topmost>
+			<visible>1</visible>
+			<enable>1</enable>
+			<maxbox>0</maxbox>
+			<minbox>0</minbox>
+			<minwidth>100</minwidth>
+			<minheight>72</minheight>
+			<maxwidth>1000</maxwidth>
+			<maxheight>1000</maxheight>
+			<appwindow>1</appwindow>
+			<blur>1</blur>
+		</attr>
+</hostwndtemplate>
+</xlue>

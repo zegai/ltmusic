@@ -1,0 +1,73 @@
+<xlue>
+	<control class="ltui.button">
+		<attr_def>
+			<attr name="NormalBkgID" type="string" >
+				<default>button.normal</default>
+			</attr>
+			<attr name="DownBkgID" type="string" >
+				<default>button.down</default>
+			</attr>
+			<attr name="DisableBkgID" type="string" >
+				<default>button.normal</default>
+			</attr>
+			<attr name="HoverBkgID" type="string" >
+			<default>button.hover</default>
+			</attr>
+			<attr name="Enable" type="bool" >
+				<default>true</default>
+			</attr>
+			<attr name="NowState" type="int" />
+		</attr_def>
+		<method_def>
+			<SetState file="Button.lua" func="SetState"/>
+			<Enable file="Button.lua" func="SetEnable" />
+		</method_def>
+		<event_def>
+			<!-- 定义一个自定义事件，这样按钮的使用者就可以连这个逻辑事件-->
+			<OnClick />
+			<OnClickJump>
+				<param>
+					<table />
+				</param>
+				<return>
+				</return>
+			</OnClickJump>
+		</event_def>
+    <objtemplate>
+	<children>
+		<!--使用TextureObject代替ImageObject,可以更好的适应不同的填充大小-->
+		<!--定义控件时内部子对象的实际id会被控件类型名修饰，不同控件中可以使用相同的子对象id-->
+		<obj id="bkg" class="ImageObject">
+			<attr>
+				<left>0</left>
+				<top>0</top>
+				<width>father.width</width>
+				<height>father.height</height>
+				<drawmode>1</drawmode>
+			</attr>
+			<children>
+				<obj id="oldBkg" class="ImageObject">
+					<attr>
+						<left>0</left>
+						<top>0</top>
+						<width>father.width</width>
+						<height>father.height</height>
+						<alpha>0</alpha>
+						<drawmode>1</drawmode>
+					</attr>
+				</obj>
+			</children>
+		</obj>
+	</children>
+	<eventlist>
+		<event name="OnLButtonDown" file="Button.lua" func="OnLButtonDown" />
+		<event name="OnLButtonUp" file="Button.lua" func="OnLButtonUp" />
+		<event name="OnMouseMove" file="Button.lua" func="OnMouseMove" />	
+		<event name="OnMouseLeave" file="Button.lua" func="OnMouseLeave" />	
+		<event name="OnBind" file="Button.lua" func="OnBind" />
+		<!--当按钮有焦点的时候，按下空格键也可以触发OnClick,加上试下?-->
+	</eventlist>
+	</objtemplate>	
+	</control>
+
+</xlue>

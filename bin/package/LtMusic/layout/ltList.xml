@@ -1,0 +1,63 @@
+<xlue>
+	<control class="ltui.ltList">
+		<attr_def>
+			<attr name="BackColor" type="string">
+				<default>ltblue</default>
+			</attr>
+			<attr name="ItemHeight" type="int">
+				<default>30</default>
+			</attr>
+			<attr name="Scroll" type="int">
+				<default>-1</default>
+			</attr>
+		</attr_def>
+		<method_def>
+			<AddItem file="ltList.lua" func="Add_Item" />
+			<DelItem file="ltList.lua" func="Del_Item" />
+			<GetNext file="ltList.lua" func="Get_Next" />
+			<GetPre  file="ltList.lua" func="Get_Pre" />
+			<SaveAll file="ltList.lua" func="Save_All" />
+			<GetItem file="ltList.lua" func="Get_Item_Val" />
+		</method_def>
+		<event_def>
+			<OnClick />
+			<OnItemDBClick>
+					<param>
+						<table />
+					</param>
+					<return>
+					</return>
+			</OnItemDBClick>
+		</event_def>
+	    <objtemplate>
+			<children>
+				<obj id="list.content" class="FillObject">
+					<attr>
+						<left>0</left>
+						<top>0</top>
+						<width>500</width>
+						<height>father.height</height>
+						<srccolor>ltblue</srccolor>
+						<alpha>0</alpha>
+					</attr>
+				</obj>
+				<obj id="list.vscoll" class="ltui.scoll">
+					<attr>
+						<left>485</left>
+						<top>0</top>
+						<width>15</width>
+						<height>father.height</height>
+					</attr>
+					<eventlist>
+						<event name="OnScollChange" file="ltList.lua" func="OnScollChange"/>
+					</eventlist>
+				</obj>
+			</children>
+			<eventlist>
+				<event name="OnBind" file="ltList.lua" func="OnBind" />
+				<event name="OnInitControl" file="ltList.lua" func="OnInitControl" />
+
+			</eventlist>
+		</objtemplate>	
+	</control>
+</xlue>

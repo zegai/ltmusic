@@ -1,0 +1,12 @@
+﻿<XLUE>
+<resource>
+  <!--下面这个字体的facename最为常用，使用系统的默认字体-->	
+  <font id="default.font" height="14" facename="微软雅黑" />
+  <font id="msg.font" height="40" facename="微软雅黑" />
+  <font id="msg.font.bold" height="40" weight="bold" facename="微软雅黑" underline="1"/>
+  <font id="system.dian" height="30" facename="新宋体"/>
+  <font id="system.left.defult" height="14" facename="微软雅黑"/>
+  <font id="system.bottom" height="12" weight="bold" facename="微软雅黑"/>
+  <font id="system.boldfont" height="12" weight="bold"/>
+</resource>
+</XLUE>

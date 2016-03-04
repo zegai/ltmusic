@@ -1,0 +1,88 @@
+<xlue>
+	<control class="ltui.MLItem">
+		<attr_def>
+			<attr name="Owner" type="string" />
+			<attr name="NormalColor" type="string">
+				<default>ltblue</default>
+			</attr>
+			<attr name="HoverColor" type="string">
+				<default>ltblue</default>
+			</attr>
+			<attr name="DownColor" type="string">
+				<default>lthgray</default>
+			</attr>
+			<attr name="DisableColor" type="string">
+				<default>ltblue</default>
+			</attr>
+			<attr name="NowState" type="int" />
+		</attr_def>
+		<method_def>
+			<SetState file="MLItem.lua" func="SetState"/>
+			<Enable file="MLItem.lua" func="SetBtnEnable" />
+		</method_def>
+		<event_def>
+			<OnClick />
+			<OnDoubleClick>
+				<param>
+					<table />
+				</param>
+				<return></return>
+			</OnDoubleClick>
+		</event_def>
+	    <objtemplate>
+			<children>
+				<obj id="itembkg" class="FillObject">
+					<attr>
+						<left>0</left>
+						<top>0</top>
+						<width>father.width</width>
+						<height>30</height>
+						<srccolor>ltblue</srccolor>
+						<alpha>60</alpha>
+					</attr>
+				</obj>
+				<obj id="item.text.name" class="TextObject">
+					<attr>
+						<left>5</left>
+						<top>5</top>
+						<width>200</width>
+						<height>30</height>
+						<text>MY COLOR</text>
+						<textcolor>system.white</textcolor>
+						<font>system.boldfont</font>
+						<zorder>100</zorder>
+					</attr>
+				</obj>
+				<obj id="item.text.singer" class="TextObject">
+					<attr>
+						<left>220</left>
+						<top>5</top>
+						<width>100</width>
+						<height>30</height>
+						<text>Perfume</text>
+						<textcolor>system.white</textcolor>
+						<font>system.boldfont</font>
+						<zorder>100</zorder>
+					</attr>
+				</obj>
+				<obj id="del.btn" class="ltui.button">
+					<attr>
+						<left>450</left>
+						<top>-3</top>
+						<width>33</width>
+						<height>26</height>
+					</attr>
+					<eventlist>
+						<event name="OnClick" file="MLItem.lua" func="DelClick"/>
+					</eventlist>
+				</obj>
+			</children>
+			<eventlist>
+				<event name="OnInitControl" file="MLItem.lua" func="OnBind" />
+				<event name="OnControlMouseEnter" file="MLItem.lua" func="OnMouseMove" />	
+				<event name="OnControlMouseLeave" file="MLItem.lua" func="OnMouseLeave" />	
+				<event name="OnLButtonDbClick" file="MLItem.lua" func="OnLButtonDbClick" />
+			</eventlist>
+		</objtemplate>	
+	</control>
+</xlue>

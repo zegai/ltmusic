@@ -1,0 +1,70 @@
+<xlue>
+	<control class="ltui.scoll">
+		<attr_def>
+			<attr name="UseBkg" type="string">
+				<default>vscoll.use</default>
+			</attr>
+			<attr name="UnuseBkg" type="string">
+				<default>vscoll.unuse</default>
+			</attr>
+			<attr name="Enable" type="bool" >
+				<default>true</default>
+			</attr>
+			<attr name="NowState" type="int" />
+			<attr name="NodeLen" type="int">
+				<default>30</default>
+			</attr>
+			<attr name="ClickY" type="int" />
+		</attr_def>
+		<method_def>
+			<SetState file="Scoller.lua" func="SetState"/>
+			<SetScrollLen file="Scoller.lua" function="SetScrollLen"/>
+		</method_def>
+		<event_def>
+			<OnScollChange />
+		</event_def>
+    <objtemplate>
+	<children>
+		<obj id="fillarea" class="FillObject">
+			<attr>
+				<left>0</left>
+				<top>0</top>
+				<width>father.width</width>
+				<height>father.height</height>
+				<alpha>0</alpha>
+			</attr>
+			<children>
+				<obj id="bkg" class="TextureObject">
+					<attr>
+						<left>0</left>
+						<top>0</top>
+						<width>father.width</width>
+						<height>father.height</height>
+					</attr>
+					<children>
+						<obj id="oldBkg" class="TextureObject">
+							<attr>
+								<left>0</left>
+								<top>0</top>
+								<width>father.width</width>
+								<height>father.height</height>
+								<alpha>0</alpha>
+							</attr>
+						</obj>
+					</children>
+				</obj>
+			</children>
+		</obj>
+	</children>
+	<eventlist>
+		<event name="OnLButtonDown" file="Scoller.lua" func="OnLButtonDown" />
+		<event name="OnLButtonUp" file="Scoller.lua" func="OnLButtonUp" />
+		<event name="OnMouseMove" file="Scoller.lua" func="OnMouseMove" />	
+		<event name="OnMouseLeave" file="Scoller.lua" func="OnMouseLeave" />	
+		<event name="OnBind" file="Scoller.lua" func="OnBind" />
+		<event name="OnMouseWheel" file="Scoller.lua" func="OnMouseWheel" />
+	</eventlist>
+	</objtemplate>	
+	</control>
+
+</xlue>

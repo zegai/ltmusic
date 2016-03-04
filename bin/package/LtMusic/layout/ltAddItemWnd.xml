@@ -1,0 +1,183 @@
+<xlue>
+	<objtreetemplate id="ltAdd.tree">
+		<attr>
+			<left>-1000</left>
+			<top>-1000</top>
+			<width>2000</width>
+			<height>2000</height>
+		</attr>
+	
+		<obj id="ltAdd.root" class="TextureObject">
+			<attr>
+				<left>0</left>
+				<top>100</top>
+				<width>300</width>
+				<height>200</height>
+				<texture>bkg.border</texture>
+			</attr>
+			<children>
+				<obj id="id.bkg" class="TextureObject">
+					<attr>
+						<left>17</left>
+						<top>11</top>
+						<width>father.width-34</width>
+						<height>father.height-33</height>
+						<!--资源相关的属性使用资源定义xml中设置的资源名-->
+						<texture>main.left.bkg</texture>
+					</attr>
+					<children>
+						<obj id="id.captionobject" class="CaptionObject">
+							<attr>
+								<left>0</left>
+								<top>0</top>
+								<width>father.width</width>
+								<height>father.height</height>
+								<zorder>-1000</zorder>
+							</attr>
+						</obj>
+						<obj id="close.btn" class="MakeNew.button">
+							<attr>
+								<left>father.width - 30</left>
+								<top>0</top>
+								<width>28</width>
+								<height>28</height>
+								<NormalBkgID>menu.close.normal</NormalBkgID>
+								<DownBkgID>menu.close.down</DownBkgID>
+								<DisableBkgID>menu.close.disable</DisableBkgID>
+								<HoverBkgID>menu.close.hover</HoverBkgID>
+							</attr>
+							<eventlist>
+								<event name="OnClick" file="ltAddItemWnd.xml.lua" func="OnClose"/>
+							</eventlist>
+						</obj>
+						
+						<obj id="text" class="TextObject">
+							<attr>
+								<left>10</left>
+								<top>5</top>
+								<width>80</width>
+								<height>22</height>
+								<font>system.left.defult</font>
+								<textcolor>system.white</textcolor>
+								<text>添加</text>
+							</attr>
+						</obj>
+						
+						<!-- 账号ID -->
+						<obj id="id.zhanghaobkg" class="TextureObject">
+							<attr>
+								<left>50</left>
+								<top>50</top>
+								<width>125</width>
+								<height>7</height>
+								<texture>login.shuru</texture>
+							</attr>
+						</obj>
+						
+						<obj id="id.inputedit" class="EditObject">
+							<attr>
+								<left>55</left>
+								<top>37</top>
+								<width>100</width>
+								<height>24</height>
+								<font>system.bottom</font>
+								<textcolor>system.white</textcolor>
+								<transparent>1</transparent>
+							</attr>
+							<eventlist>
+								
+							</eventlist>
+						</obj>
+						
+						<obj id="id.input" class="TextObject">
+							<attr>
+								<left>18</left>
+								<top>42</top>
+								<width>50</width>
+								<height>24</height>
+								<font>system.bottom</font>
+								<textcolor>system.white</textcolor>
+								<text>字段:</text>
+							</attr>
+						</obj>
+					
+						<!-- 密码 -->
+						<obj id="id.mimabkg" class="TextureObject">
+							<attr>
+								<left>50</left>
+								<top>100</top>
+								<width>125</width>
+								<height>7</height>
+								<texture>login.shuru</texture>
+							</attr>
+						</obj>
+						
+						<obj id="id.input" class="TextObject">
+							<attr>
+								<left>5</left>
+								<top>92</top>
+								<width>50</width>
+								<height>24</height>
+								<font>system.bottom</font>
+								<textcolor>system.white</textcolor>
+								<text>默认值:</text>
+							</attr>
+						</obj>
+
+						<obj id="id.valueedit" class="EditObject">
+							<attr>
+								<left>55</left>
+								<top>87</top>
+								<width>100</width>
+								<height>24</height>
+								<font>system.bottom</font>
+								<textcolor>system.white</textcolor>
+								<transparent>1</transparent>
+							</attr>
+							<eventlist>
+								
+							</eventlist>
+						</obj>
+						<obj id="add.btn" class="MakeNew.button">
+							<attr>
+								<left>200</left>
+								<top>55</top>
+								<width>40</width>
+								<height>40</height>
+								<NormalBkgID>menu.add.normal</NormalBkgID>
+								<DownBkgID>menu.add.down</DownBkgID>
+								<DisableBkgID>menu.add.disable</DisableBkgID>
+								<HoverBkgID>menu.add.hover</HoverBkgID>
+							</attr>
+							<eventlist>
+								<event name="OnClick" file="ltAddItemWnd.xml.lua" func="OnAddClick"/>
+							</eventlist>
+						</obj>
+					</children>
+				</obj>
+			</children>
+			<eventlist>
+				<event name="OnInitControl"/>
+			</eventlist>
+		</obj>	
+	</objtreetemplate>
+
+	<hostwndtemplate id="ltAdd.wnd" class="ModalHostWnd">
+		<attr> 
+			<title>Add</title>
+			<layered>1</layered>
+			<left>0</left> 
+			<top>300</top>
+			<width>350</width>
+			<height>300</height>
+			<visible>1</visible>
+			<enable>1</enable>
+			<minwidth>350</minwidth>
+			<minheight>500</minheight>
+			<appwindow>0</appwindow>
+		</attr>
+		<eventlist>
+			<event name="OnCreate" file="ltAddItemWnd.xml.lua" func="OnCreate" />
+		</eventlist>
+	</hostwndtemplate>
+</xlue>

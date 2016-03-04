@@ -1,0 +1,125 @@
+<XLUE>
+<resource>
+	<!--普通的位图资源-->
+	<texture id="bkg.border" type="NineInOne" path="bitmap\bkg.border.png" />
+	<texture id="main.left.bkg" type="NineInOne" path="bitmap\mian.left.bkg.png" />
+	
+
+
+	<texture id="scoll.unuse" type="ThreeInOneH" path="bitmap\gundongtiao\gdth.normal.png" />
+	<texture id="scoll.use" type="ThreeInOneH" path="bitmap\gundongtiao\gdth.hover.png" />
+	
+	<texture id="vscoll.unuse" type="ThreeInOneV" path="bitmap\gundongtiao\gdtv.normal.png" />
+	<texture id="vscoll.use" type="ThreeInOneV" path="bitmap\gundongtiao\gdtv.hover.png" />
+
+	<bitmap id="main.bkg" path="bitmap\tmpbkg.png"/>
+	<bitmap id="main.left.touxiang.mask" path="bitmap\main.left.touxiang.mask.png" />
+	<bitmap id="ceshi" path="bitmap\mask_toux.png"  />
+	<bitmap id="main.left.touxiang.bkg" path="bitmap\main.left.touxiang.bkg.png" />
+	
+	<bitmap id="main.playnormal" path="bitmap\startnormal.png" />
+	<bitmap id="main.playhover" path="bitmap\starthover.png" />
+	
+	<bitmap id="main.stopnormal" path="bitmap\stopnormal.png" />
+	<bitmap id="main.stophover" path="bitmap\stopnormal.png" />
+
+	<bitmap id="main.prenormal" path="bitmap\prenormal.png" />
+	<bitmap id="main.prehover" path="bitmap\prehover.png" />
+
+	<bitmap id="main.nextnormal" path="bitmap\nextnormal.png" />
+	<bitmap id="main.nexthover" path="bitmap\nexthover.png" />
+
+	<bitmap id="app.icon"  path="bitmap\icon.png" />
+	<bitmap id="app.icon2"  path="bitmap\Shutdown.png" />
+	<!--纹理贴图资源 -->
+	<!-- 纹理的类型有 
+	：
+	Stretch,Normal,Tile   拉伸，不拉伸，平铺
+	NineInOne,ThreeInOneH,ThreeInOneV,FiveInOneH,FiveInOneV,  迅雷传统用的固定区域映射
+	以及自定义映射   
+
+	通过定义这些类型，可以方便的让位图按预期意图进行拉伸，同时也方便设计师的工作
+	-->
+	<imagelist id="guanbi.list" vertical="0" splitter="1" varyblock="1" image="bitmap\guanbi.png" />
+	<bitmap id="button.normal" imagelist="guanbi.list" index="1" />
+	<bitmap id="button.down" imagelist="guanbi.list" index="2" />
+	<bitmap id="button.hover" imagelist="guanbi.list" index="3" />
+	<bitmap id="button.idsable" imagelist="guanbi.list" index="4" />
+
+	<imagelist id="pos.list" vertical="0" splitter="1" varyblock="1" image="bitmap\left.list2.zzxz.png" />
+	<bitmap id="pos.normal" imagelist="pos.list" index="1" />
+	<bitmap id="pos.down" imagelist="pos.list" index="2" />
+	<bitmap id="pos.hover" imagelist="pos.list" index="3" />
+	<bitmap id="pos.idsable" imagelist="pos.list" index="4" />
+
+	<imagelist id="pre.list" vertical="0" splitter="1" varyblock="1" image="bitmap\left.huitou.png" />
+	<bitmap id="pre.normal" imagelist="pre.list" index="1" />
+	<bitmap id="pre.down" imagelist="pre.list" index="2" />
+	<bitmap id="pre.hover" imagelist="pre.list" index="3" />
+	<bitmap id="pre.disable" imagelist="pre.list" index="4" />
+	
+	<imagelist id="next.list" vertical="0" splitter="1" varyblock="1" image="bitmap\left.huitou2.png" />
+	<bitmap id="next.normal" imagelist="next.list" index="1" />
+	<bitmap id="next.down" imagelist="next.list" index="2" />
+	<bitmap id="next.hover" imagelist="next.list" index="3" />
+	<bitmap id="next.disable" imagelist="next.list" index="4" />
+
+
+	<!-- 菜单Normal -->
+	<imagelist id="menu.list.normal" vertical="0" splitter="1" varyblock="1" image="bitmap\main.caidan.normal.list.png" />
+	<bitmap id="menu.add.normal" imagelist="menu.list.normal" index="1" />
+	<bitmap id="menu.start.normal" imagelist="menu.list.normal" index="2" />
+	<bitmap id="menu.pause.normal" imagelist="menu.list.normal" index="3" />
+	<bitmap id="menu.close.normal" imagelist="menu.list.normal" index="4" />
+	<bitmap id="menu.open.normal" imagelist="menu.list.normal" index="5" />
+	<bitmap id="menu.check.normal" imagelist="menu.list.normal" index="6" />
+	<bitmap id="menu.openlist.normal" imagelist="menu.list.normal" index="7" />
+	<bitmap id="menu.tip.normal" imagelist="menu.list.normal" index="8" />
+	<bitmap id="menu.search.normal" imagelist="menu.list.normal" index="9" />
+	<bitmap id="menu.define.normal" imagelist="menu.list.normal" index="10" />
+	<bitmap id="menu.vip.normal" imagelist="menu.list.normal" index="11" />
+
+	<!-- 菜单Down -->
+	<imagelist id="menu.list.down" vertical="0" splitter="1" varyblock="1" image="bitmap\main.caidan.down.list.png" />
+	<bitmap id="menu.add.down" imagelist="menu.list.down" index="1" />
+	<bitmap id="menu.start.down" imagelist="menu.list.down" index="2" />
+	<bitmap id="menu.pause.down" imagelist="menu.list.down" index="3" />
+	<bitmap id="menu.close.down" imagelist="menu.list.down" index="4" />
+	<bitmap id="menu.open.down" imagelist="menu.list.down" index="5" />
+	<bitmap id="menu.check.down" imagelist="menu.list.down" index="6" />
+	<bitmap id="menu.openlist.down" imagelist="menu.list.down" index="7" />
+	<bitmap id="menu.tip.down" imagelist="menu.list.down" index="8" />
+	<bitmap id="menu.search.down" imagelist="menu.list.down" index="9" />
+	<bitmap id="menu.define.down" imagelist="menu.list.down" index="10" />
+	<bitmap id="menu.vip.down" imagelist="menu.list.down" index="11" />
+	
+	<!-- 菜单Hover -->
+	<imagelist id="menu.list.hover" vertical="0" splitter="1" varyblock="1" image="bitmap\main.caidan.hover.list.png" />
+	<bitmap id="menu.add.hover" imagelist="menu.list.hover" index="1" />
+	<bitmap id="menu.start.hover" imagelist="menu.list.hover" index="2" />
+	<bitmap id="menu.pause.hover" imagelist="menu.list.hover" index="3" />
+	<bitmap id="menu.close.hover" imagelist="menu.list.hover" index="4" />
+	<bitmap id="menu.open.hover" imagelist="menu.list.hover" index="5" />
+	<bitmap id="menu.check.hover" imagelist="menu.list.hover" index="6" />
+	<bitmap id="menu.openlist.hover" imagelist="menu.list.hover" index="7" />
+	<bitmap id="menu.tip.hover" imagelist="menu.list.hover" index="8" />
+	<bitmap id="menu.search.hover" imagelist="menu.list.hover" index="9" />
+	<bitmap id="menu.define.hover" imagelist="menu.list.hover" index="10" />
+	<bitmap id="menu.vip.hover" imagelist="menu.list.hover" index="11" />
+	
+	<!-- 菜单Disable -->
+	<imagelist id="menu.list.disable" vertical="0" splitter="1" varyblock="1" image="bitmap\main.caidan.disable.list.png" />
+	<bitmap id="menu.add.disable" imagelist="menu.list.disable" index="1" />
+	<bitmap id="menu.start.disable" imagelist="menu.list.disable" index="2" />
+	<bitmap id="menu.pause.disable" imagelist="menu.list.disable" index="3" />
+	<bitmap id="menu.close.disable" imagelist="menu.list.disable" index="4" />
+	<bitmap id="menu.open.disable" imagelist="menu.list.disable" index="5" />
+	<bitmap id="menu.check.disable" imagelist="menu.list.disable" index="6" />
+	<bitmap id="menu.openlist.disable" imagelist="menu.list.disable" index="7" />
+	<bitmap id="menu.tip.disable" imagelist="menu.list.disable" index="8" />
+	<bitmap id="menu.search.disable" imagelist="menu.list.disable" index="9" />
+	<bitmap id="menu.define.disable" imagelist="menu.list.disable" index="10" />
+	<bitmap id="menu.vip.disable" imagelist="menu.list.disable" index="11" />
+	
+</resource>
+</XLUE>
