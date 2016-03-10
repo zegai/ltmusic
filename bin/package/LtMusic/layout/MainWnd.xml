@@ -58,6 +58,17 @@
 							<font>system.bottom</font>
 						</attr>
 					</obj>
+					<obj id="id.text.name" class="TextObject">
+						<attr>
+							<left>275</left> 
+							<top>16</top>
+							<width>150</width>
+							<height>24</height>			
+							<text></text>
+							<textcolor>system.white</textcolor>
+							<font>system.bottom</font>
+						</attr>
+					</obj>
 				</children>
 			</obj>
 			<obj id="id.main.bkg" class="ImageObject">
@@ -118,17 +129,6 @@
 							</obj>
 						</children>
 					</obj>
-					<obj id="id.text.name" class="TextObject">
-						<attr>
-							<left>100</left> 
-							<top>52</top>
-							<width>150</width>
-							<height>24</height>			
-							<text>SB蔚蓝</text>
-							<textcolor>system.white</textcolor>
-							<font>system.bottom</font>
-						</attr>
-					</obj>
 					<obj id="music.pre.btn" class="ltui.button">
 						<attr>
 							<left>235</left>
@@ -141,7 +141,7 @@
 							<HoverBkgID>main.prehover</HoverBkgID>
 						</attr>
 						<eventlist>
-							<event name="OnClick" file="MainWnd.xml.lua" func="close_btn_OnLButtonDown"/>
+							<event name="OnClick" file="MainWnd.xml.lua" func="OnPreClick"/>
 						</eventlist>
 					</obj>
 					<obj id="music.play.btn" class="ltui.button">
@@ -186,13 +186,13 @@
 							<HoverBkgID>main.nexthover</HoverBkgID>
 						</attr>
 						<eventlist>
-							<event name="OnClick" file="MainWnd.xml.lua" func="close_btn_OnLButtonDown"/>
+							<event name="OnClick" file="MainWnd.xml.lua" func="OnNextClick"/>
 						</eventlist>
 					</obj>
 					<obj id="time.text.use" class="TextObject">
 						<attr>
 							<left>155</left> 
-							<top>120</top>
+							<top>125</top>
 							<width>40</width>
 							<height>24</height>			
 							<text>00:00</text>
@@ -203,7 +203,7 @@
 					<obj id="music.scoller" class="ltui.UserScroll">
 						<attr>
 							<left>200</left>
-							<top>120</top>
+							<top>125</top>
 							<width>320</width>
 							<height>16</height>
 						</attr>
@@ -214,7 +214,7 @@
 					<obj id="time.text.full" class="TextObject">
 						<attr>
 							<left>530</left> 
-							<top>120</top>
+							<top>125</top>
 							<width>40</width>
 							<height>24</height>			
 							<text>00:00</text>
@@ -300,7 +300,7 @@
 							<event name="OnClick" file="MainWnd.xml.lua" func="save_items"/>
 						</eventlist>
 					</obj>
-					<obj id="music.playmode.btn" class="ltui.button">
+					<obj id="music.single.btn" class="ltui.button">
 						<attr>
 							<left>3</left>
 							<top>110</top>
@@ -312,7 +312,22 @@
 							<HoverBkgID>menu.tip.hover</HoverBkgID>
 						</attr>
 						<eventlist>
-							<event name="OnClick" file="MainWnd.xml.lua" func="btn_show"/>
+							<event name="OnClick" file="MainWnd.xml.lua" func="single_click"/>
+						</eventlist>
+					</obj>
+					<obj id="music.loop.btn" class="ltui.button">
+						<attr>
+							<left>3</left>
+							<top>110</top>
+							<width>28</width>
+							<height>28</height>
+							<NormalBkgID>menu.loop.normal</NormalBkgID>
+							<DownBkgID>menu.loop.down</DownBkgID>
+							<DisableBkgID>menu.loop.disable</DisableBkgID>
+							<HoverBkgID>menu.loop.hover</HoverBkgID>
+						</attr>
+						<eventlist>
+							<event name="OnClick" file="MainWnd.xml.lua" func="loop_click"/>
 						</eventlist>
 					</obj>
 					<obj id="music.list.btn" class="ltui.button">
@@ -360,8 +375,8 @@
 			<layered>1</layered>
 			<left>200</left> 
 			<top>100</top>
-			<width>750</width>
-			<height>1000</height>
+			<width>650</width>
+			<height>420</height>
 			<topmost>0</topmost>
 			<visible>1</visible>
 			<enable>1</enable>

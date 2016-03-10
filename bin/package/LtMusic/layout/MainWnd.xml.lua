@@ -5,8 +5,9 @@ local play_node = {
 	file_curtime = '',
 	file_fulltime = '',
 	file_path = '',
-	file_nextpath = '',
 	file_persent = '',
+	file_volume = '100',
+	file_mode = 'singleloop' --listloop singleloop
 }
 MainTree = {}
 HostWndTB = {}
@@ -43,17 +44,28 @@ function close_btn_OnLButtonDown(self)
 
 end
 
-local function Make_Next()
-	local nextpath = play_node.file_nextpath
+function OnNext()
 	local next_item = MainTree:GetUIObject("id.func.list"):GetNext()
 	if next_item then
-		play_node.file_path = nextpath;
-		play_node.file_nextpath = next_item.item_path_;
+		play_node.file_path = next_item.item_path_
+		play_node.file_name = next_item.item_head_
 	else
 		XLMessageBox( 'Get Null Item' )
 	end
+	play_manager.play(play_node)
 end
 
+function OnPre()
+	local pre_item = MainTree:GetUIObject("id.func.list"):GetPre()
+	if pre_item then
+		play_node.file_path = pre_item.item_path_
+		play_node.file_name = pre_item.item_head_
+	else
+		XLMessageBox( 'Get Null Item' )
+	end
+	play_manager.play(play_node)
+end
+ 
 
 function OnTime(self)
 	
@@ -92,12 +104,13 @@ function OnTime(self)
 		end
 		banner1:SetText(min .. ':' .. sec);
 		if attr.FullTime ~= nil then
-			if nowtime + 1000 > attr.FullTime then
-				Make_Next()
-				attr.playpath = play_node.file_path;
-				XLMessageBox('[DEBUG]:' .. attr.playpath)
-				banner2:SetText('00:00');
-				start_play_item(self);
+			if nowtime == attr.FullTime then
+				if play_node.file_mode == 'listloop' then
+					OnNext()
+				elseif play_node.file_mode == 'singleloop' then
+					play_manager.stop(play_node)
+					play_manager.play(play_node)
+				end
 			end
 			local scroll = attr.scoller;
 			scroll:OnPersent(nowtime*1000/attr.FullTime);
@@ -107,33 +120,7 @@ function OnTime(self)
 	
 end
 
-function OnInitControl(self)
-	local owner = self:GetOwner()
-	MainTree = owner;
-	HostWndTB.IsShow = false;
-	local btn = owner:GetUIObject("music.pause.btn")
-	btn:SetVisible(false);
-	btn:SetChildrenVisible(false);
 
-	local Mananger = XLGetObject("Xunlei.UIEngine.TemplateManager")
-    local banner = Mananger:GetTemplate("def.ani","AnimationTemplate")
-    local instance = banner:CreateInstance()
-    if instance then
-    	local attr = instance:GetAttribute();
-    	--当前播放时间
-    	attr.textuse = owner:GetUIObject("time.text.use");
-    	--歌曲总时间
-    	attr.textfull = owner:GetUIObject("time.text.full");
-    	--进度条
-    	attr.scoller = owner:GetUIObject("music.scoller");
-    	--动画响应函数
-    	attr.func = OnTime;
-    	--播放歌曲路径
-    	attr.playpath = "D:/Github/sbplayer/bin/2.mp3"
-    	owner:AddAnimation(instance)
-        instance:Resume()
-    end
-end
 
 function MSG_OnMouseMove(self)
 	--self:SetTextFontResID ("msg.font.bold")
@@ -193,28 +180,15 @@ function add_item(self)
 		end
 		lc:AddItem{item_head_ = name, item_text_ = min .. ":" .. sec , item_path_ = path}
 	end
-
-	
 end
 
 function pause_item(self)
 	play_manager.pause('nil')
-	local showbtn = MainTree:GetUIObject("music.play.btn");
-	showbtn:SetVisible(true);
-	showbtn:SetChildrenVisible(true);
-	self:SetVisible(false);
-	self:SetChildrenVisible(false);
 end
 
 
 function play_item(self)
 	play_manager.pause('nil');
-	local showbtn = MainTree:GetUIObject("music.pause.btn");
-	showbtn:SetVisible(true);
-	showbtn:SetChildrenVisible(true);
-	self:SetVisible(false);
-	self:SetChildrenVisible(false);
-
 end
 
 
@@ -226,12 +200,7 @@ function start_play_item(self)
 		play_node.file_path = attr.playpath
 		play_manager.play(play_node)
 	end
-	local showbtn = MainTree:GetUIObject("music.pause.btn");
-	local hidebtn = MainTree:GetUIObject("music.play.btn");
-	showbtn:SetVisible(true);
-	showbtn:SetChildrenVisible(true);
-	hidebtn:SetVisible(false);
-	hidebtn:SetChildrenVisible(false);
+	
 	
 end
 
@@ -243,9 +212,8 @@ end
 function OnListDBClick(self, str, attr)
 	if attr.data_model_ ~= nil then
 		play_node.file_path = attr.data_model_.item_path_
+		play_node.file_name = attr.data_model_.item_head_
 		play_manager.play(play_node)
-		play_node.file_nextpath = MainTree:GetUIObject("id.func.list"):GetNext().item_path_
-		MainTree:GetUIObject('id.text.name'):SetText(attr.data_model_.item_head_)
 	end
 end
 
@@ -342,5 +310,79 @@ function OnSaveClick(self)
 	list_:SaveAll()
 end
 
+function OnNextClick(self)
+	OnNext()
+end
 
+function OnPreClick(self)
+	OnPre()
+end
+
+function single_click(self)
+	local btn = MainTree:GetUIObject('music.loop.btn')
+	btn:SetVisible(true);
+	btn:SetChildrenVisible(true);
+	self:SetVisible(false);
+	self:SetChildrenVisible(false);
+	play_node.file_mode = 'listloop'
+end
+
+function loop_click(self)
+	local btn = MainTree:GetUIObject('music.single.btn')
+	btn:SetVisible(true);
+	btn:SetChildrenVisible(true);
+	self:SetVisible(false);
+	self:SetChildrenVisible(false);
+	play_node.file_mode = 'singleloop'
+end
+
+function OnInitControl(self)
+	local owner = self:GetOwner()
+	MainTree = owner;
+	HostWndTB.IsShow = false;
+	local btn = owner:GetUIObject("music.pause.btn")
+	btn:SetVisible(false);
+	btn:SetChildrenVisible(false);
+	btn = owner:GetUIObject('music.loop.btn')
+	btn:SetVisible(false);
+	btn:SetChildrenVisible(false);
+	local Mananger = XLGetObject("Xunlei.UIEngine.TemplateManager")
+    local banner = Mananger:GetTemplate("def.ani","AnimationTemplate")
+    local instance = banner:CreateInstance()
+    if instance then
+    	local attr = instance:GetAttribute();
+    	--当前播放时间
+    	attr.textuse = owner:GetUIObject("time.text.use");
+    	--歌曲总时间
+    	attr.textfull = owner:GetUIObject("time.text.full");
+    	--进度条
+    	attr.scoller = owner:GetUIObject("music.scoller");
+    	--动画响应函数
+    	attr.func = OnTime;
+    	--播放歌曲路径
+    	attr.playpath = "D:/Github/sbplayer/bin/2.mp3"
+    	owner:AddAnimation(instance)
+        instance:Resume()
+    end
+    local function UIPlayStatus()
+    	local showbtn = MainTree:GetUIObject("music.pause.btn");
+		local hidebtn = MainTree:GetUIObject("music.play.btn");
+		showbtn:SetVisible(true);
+		showbtn:SetChildrenVisible(true);
+		hidebtn:SetVisible(false);
+		hidebtn:SetChildrenVisible(false);
+		MainTree:GetUIObject('id.text.name'):SetText(play_node.file_name)
+		MainTree:GetUIObject("time.text.full"):SetText('00:00')
+    end
+    local function UIPauseStatus()
+    	local showbtn = MainTree:GetUIObject("music.pause.btn");
+		local hidebtn = MainTree:GetUIObject("music.play.btn");
+		showbtn:SetVisible(false);
+		showbtn:SetChildrenVisible(false);
+		hidebtn:SetVisible(true);
+		hidebtn:SetChildrenVisible(true);
+    end
+    play_manager.set_callback(UIPlayStatus, UIPauseStatus, nil, nil, nil)
+
+end
 

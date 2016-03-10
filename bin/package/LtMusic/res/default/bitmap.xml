@@ -121,5 +121,10 @@
 	<bitmap id="menu.define.disable" imagelist="menu.list.disable" index="10" />
 	<bitmap id="menu.vip.disable" imagelist="menu.list.disable" index="11" />
 	
+	<imagelist id="menu.define" vertical="0" splitter="1" varyblock="1" image="bitmap\huanyuan.list.png" />
+	<bitmap id="menu.loop.normal" imagelist="menu.define" index="1" />
+	<bitmap id="menu.loop.down" imagelist="menu.define" index="2" />
+	<bitmap id="menu.loop.hover" imagelist="menu.define" index="3" />
+	<bitmap id="menu.loop.disable" imagelist="menu.define" index="4" />
 </resource>
 </XLUE>

@@ -87,9 +87,7 @@ enum MType{
 	PAUSE,
 	STOP,
 	JUMP,
-	NEXT,
-	PRE,
-
+	INIT,
 	PLAY_T = 1000,
 	PAUSE_T,
 	STOP_T,
@@ -124,7 +122,7 @@ public:
 	void MusicPause(Mul_Node &Node);
 	void MusicStop(Mul_Node &Node);
 	void MusicJump(Mul_Node &Node);
-
+	void MusicInit(Mul_Node &Node);
 	unsigned MusicGetCurTime();
 	unsigned MusicGetFullTime();
 	#define OUT

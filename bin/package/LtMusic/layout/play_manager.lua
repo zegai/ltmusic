@@ -24,10 +24,11 @@ local function def_callback()
 end
 
 local core = XLGetObject("HelloBolt.Music.Factory"):CreateInstance() or nil
-
+core:Init()
 local function play_( item )
 	if core then
 		core:Play(0, item.file_path)
+		play_status.curstatus = 'play'
 		return play_status.play_callback(item)
 	end
 	return false
@@ -80,6 +81,13 @@ local function update_( item )
 	return false
 end
 
+local function set_call_(m_pPlay, m_pPause, m_pStop, m_pPersent, m_pLoad)
+	play_status.play_callback = m_pPlay or def_callback
+	play_status.pause_callback = m_pPause or def_callback
+	play_status.stop_callback = m_pStop or def_callback
+	play_status.persent_callback = m_pPersent or def_callback
+	play_status.load_callback = m_pLoad or def_callback
+end
 play_status.play_callback = def_callback
 play_status.pause_callback = def_callback
 play_status.stop_callback = def_callback
@@ -95,6 +103,7 @@ manager.stop = stop_
 manager.jump = persent_
 manager.load = load_
 manager.update = update_
+manager.set_callback = set_call_
 
 return manager
 

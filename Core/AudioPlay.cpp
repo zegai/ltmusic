@@ -12,7 +12,9 @@ AudioPlay::~AudioPlay(void)
 {
 }
 
+void AudioPlay::Audio_Init(){
 
+}
 bool AudioPlay::Audio_Open(LTSTRING* strpath){
 	MCI_OPEN_PARMS mciOp;
 	mciOp.lpstrDeviceType = _T("mpegvideo");
@@ -166,6 +168,10 @@ bool BASSPlay::Audio_GetInfo(DWORD reg,const TCHAR* path,OUT DWORD& str){
 	str = BASS_ChannelBytes2Seconds(BassType, len)*1000;
 	BASS_StreamFree(BassType);
 	return true;
+}
+
+void BASSPlay::Audio_Init(){
+	bool r = BASS_Init(-1,44100,0,0,NULL);
 }
 
 void BASSPlay::Audio_GetCurTime(){

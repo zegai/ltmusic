@@ -20,6 +20,7 @@ public:
 	virtual void Audio_Play();
 	virtual void Audio_Stop();
 	virtual void Audio_Release();
+	virtual void Audio_Init();
 	//virtual bool Audio_Handle_Status();
 protected:
 	handle_type type;
@@ -42,5 +43,6 @@ public:
 	void Audio_Play();
 	void Audio_Stop();
 	void Audio_Release();
+	void Audio_Init();
 	//bool Audio_Handle_Status();
 };

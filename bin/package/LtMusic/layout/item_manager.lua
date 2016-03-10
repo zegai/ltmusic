@@ -181,9 +181,9 @@ local function get_item_udata_( pos )
 	return 'nil'
 end
 
-local function get_item_( pos )
+local function get_item_pos_( pos )
 	if local_items_[pos] then
-		return local_items_[pos].item_user_
+		return local_items_[pos]
 	end
 	return 'nil'
 end
@@ -211,7 +211,7 @@ manager.get_save = read_info_
 manager.set_serialization = set_serialization_func_
 
 manager.get_item_value = get_item_udata_
-manager.get_item  = get_item_
+manager.get_item  = get_item_pos_
 manager.get_item_index = get_item_index_
 
 return manager

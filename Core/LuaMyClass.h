@@ -14,7 +14,7 @@ public:
 	static int Jump(lua_State* luaState);
 	static int GetTime(lua_State* luaState);
 	static int GetPath(lua_State* luaState);
-
+	static int Init(lua_State* luaState);
 	static int OpenFile(lua_State* luaState);
 public:
     static void RegisterClass(XL_LRT_ENV_HANDLE hEnv);

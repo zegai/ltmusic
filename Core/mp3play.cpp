@@ -40,6 +40,12 @@ void
 MusicControl::MusicJump(Mul_Node &Node)
 {
 }
+void 
+MusicControl::MusicInit(Mul_Node &Node)
+{
+	audio->Audio_Init();
+
+}
 
 unsigned 
 MusicControl::MusicGetFullTime()
@@ -79,14 +85,15 @@ MusicControl::PlayThread(PVOID udata)
 		(&MusicControl::MusicPause),
 		(&MusicControl::MusicStop),
 		(&MusicControl::MusicJump),
+		(&MusicControl::MusicInit),
 	};
-
+	size_t ptr_c = sizeof(work)/sizeof(ptrWork);
 	for (;;){
 		DWORD ret = WaitForSingleObject(ev, 1000);
 		if (WAIT_OBJECT_0 == ret){
 			while (qqueue->getlistNode(ControlNode)){
-				assert(ControlNode.Mes_Type < 4);
-				(ucontrol->*work[ControlNode.Mes_Type])(ControlNode);
+				if(ControlNode.Mes_Type <= ptr_c);
+					(ucontrol->*work[ControlNode.Mes_Type])(ControlNode);
 			}
 			qqueue->ResetEv();
 		}
