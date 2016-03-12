@@ -10,6 +10,7 @@ void MusicControl::MusicPlay(Mul_Node &Node)
 		audio->Cur_Path_->compare(Node.UserData.play.ltstring->c_str())){
 		audio->Audio_Stop();
 		audio->Audio_Open(Node.UserData.play.ltstring);
+		audio->Audio_Volume(audio->Volume_);
 		audio->Audio_Play();
 	}
 	else if (Node.UserData.play.playflag == 1) { //pause to play
@@ -37,14 +38,19 @@ MusicControl::MusicPause(Mul_Node &Node)
 }
 
 void 
-MusicControl::MusicJump(Mul_Node &Node)
-{
+MusicControl::MusicJump(Mul_Node &Node){
+	audio->Audio_Jump(Node.UserData.JumpPersent);
 }
 void 
 MusicControl::MusicInit(Mul_Node &Node)
 {
 	audio->Audio_Init();
 
+}
+
+void 
+MusicControl::MusicVolume(Mul_Node &Node){
+	audio->Audio_Volume(Node.UserData.JumpPersent);
 }
 
 unsigned 
@@ -86,6 +92,7 @@ MusicControl::PlayThread(PVOID udata)
 		(&MusicControl::MusicStop),
 		(&MusicControl::MusicJump),
 		(&MusicControl::MusicInit),
+		(&MusicControl::MusicVolume),
 	};
 	size_t ptr_c = sizeof(work)/sizeof(ptrWork);
 	for (;;){

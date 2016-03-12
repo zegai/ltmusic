@@ -1,14 +1,19 @@
+local user_data = nil
 
 function OnCreate(self)
 
 	local hostWndManager = XLGetObject("Xunlei.UIEngine.HostWndManager")
 	local mainWnd = hostWndManager:GetHostWnd("MainFrame")
+	user_data = self:GetUserData()
+	local volume = self:GetBindUIObjectTree():GetUIObject('music.scoller')
+	volume:OnPersent(user_data.get_memconfig().file_volume*10)
 	self:Center(mainWnd)
 	
 end
 
 function OnInitControl(self)
 	
+	--volume:OnPersent(user_data.get_memconfig().file_volume)
 end
 
 function OnClose(self)
@@ -23,6 +28,15 @@ function Globel_Get_Obj(self, wndname, objname)
 	local hostWnd = XLGetObject("Xunlei.UIEngine.HostWndManager"):GetHostWnd(wndname)
 	return hostWnd:GetBindUIObjectTree():GetUIObject(objname)
 
+end
+
+function OnPointChange(self, str, attr)
+	if user_data then
+		local vl = {}
+		vl.file_volume = tonumber(attr)
+		user_data.volume(vl)
+		user_data.save_config()
+	end
 end
 
 function OnAddClick(self)

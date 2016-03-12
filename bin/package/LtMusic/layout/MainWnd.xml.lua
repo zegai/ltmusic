@@ -1,14 +1,6 @@
 package.path = package.path .. ';..\\bin\\package\\LtMusic\\layout\\?.lua;'
 local play_manager = require('play_manager')
-local play_node = {
-	file_name = '',
-	file_curtime = '',
-	file_fulltime = '',
-	file_path = '',
-	file_persent = '',
-	file_volume = '100',
-	file_mode = 'singleloop' --listloop singleloop
-}
+local play_node = {}
 MainTree = {}
 HostWndTB = {}
 
@@ -144,10 +136,21 @@ end
 
 function ShowList(self, isshow)
 	local bkg = MainTree:GetUIObject("id.app.border")
+	local hostwnd = XLGetObject("Xunlei.UIEngine.HostWndManager"):GetHostWnd('MainFrame')
+	local left,top,_,_ = hostwnd:GetWindowRect()
 	local aniFactory = XLGetObject("Xunlei.UIEngine.AnimationFactory")
 	local posAni = aniFactory:CreateAnimation("PosChangeAnimation")
 	posAni:SetTotalTime(400)
+
+	---定义动画结束的回调函数
+	local function onAniFinish(self,oldState,newState)
+		if not isshow and newState == 4 then
+			hostwnd:Move(left, top, 650, 220)
+		end
+	end
+	posAni:AttachListener(true,onAniFinish)
 	if isshow then
+		hostwnd:Move(left, top, 650, 400)
 		posAni:SetKeyFrameRect(0,0,650,220,0,0,650,400);
 	else
 		posAni:SetKeyFrameRect(0,0,650,400,0,0,650,220);
@@ -204,11 +207,6 @@ function start_play_item(self)
 	
 end
 
-
-function save_items(self)
-	MainTree:GetUIObject("id.func.list"):SaveAll()
-end
-
 function OnListDBClick(self, str, attr)
 	if attr.data_model_ ~= nil then
 		play_node.file_path = attr.data_model_.item_path_
@@ -217,6 +215,10 @@ function OnListDBClick(self, str, attr)
 	end
 end
 
+function OnPointChange(self, str,attr)
+	play_node.file_persent = tonumber(attr)
+	play_manager.jump(play_node)
+end
 
 function ShowModalDialog(self, wndClass, wndID, treeClass, treeID, userData, xarName, needF)
 	local templateMananger = XLGetObject("Xunlei.UIEngine.TemplateManager")
@@ -257,11 +259,11 @@ function ShowModalDialog(self, wndClass, wndID, treeClass, treeID, userData, xar
 		local xarManager = XLGetObject("Xunlei.UIEngine.XARManager")
 		wndimage:SetResProvider(xarManager)
 		local left,top,right,bottom = rootObj:GetObjPos()--坐标
-		wndimage:SetObjPos2((right-left)/2-175,(bottom-top)/2-150,300,200)
+		wndimage:SetObjPos2((right-left)/2-175,(bottom-top)/2-110,350,200)
 		wndimage:SetZorder(1200)
 		--画出一个图片
 		local xlgraphic = XLGetObject("Xunlei.XLGraphic.Factory.Object")
-		local xlbitmap = xlgraphic:CreateBitmap("ARGB32",300,200)
+		local xlbitmap = xlgraphic:CreateBitmap("ARGB32",350,200)
 		local render = XLGetObject("Xunlei.UIEngine.RenderFactory")
 		render:RenderObject(uiObjectTree:GetRootObject(),xlbitmap)
 
@@ -299,6 +301,12 @@ function ShowModalDialog(self, wndClass, wndID, treeClass, treeID, userData, xar
     end
 end
 
+function show_define(self)
+	local templateMananger = XLGetObject("Xunlei.UIEngine.TemplateManager")
+	local hostWndManager = XLGetObject("Xunlei.UIEngine.HostWndManager")
+	ShowModalDialog(self,"ltAdd.wnd", "ltAdd.wnd.1","ltAdd.tree","ltAdd.tree.1",play_manager,nil,true)
+end
+
 function OnAddClick(self)
 	local templateMananger = XLGetObject("Xunlei.UIEngine.TemplateManager")
 	local hostWndManager = XLGetObject("Xunlei.UIEngine.HostWndManager")
@@ -325,6 +333,8 @@ function single_click(self)
 	self:SetVisible(false);
 	self:SetChildrenVisible(false);
 	play_node.file_mode = 'listloop'
+	play_manager.setmode(play_node)
+	play_manager.save_config()
 end
 
 function loop_click(self)
@@ -334,6 +344,8 @@ function loop_click(self)
 	self:SetVisible(false);
 	self:SetChildrenVisible(false);
 	play_node.file_mode = 'singleloop'
+	play_manager.setmode(play_node)
+	play_manager.save_config()
 end
 
 function OnInitControl(self)
@@ -343,7 +355,13 @@ function OnInitControl(self)
 	local btn = owner:GetUIObject("music.pause.btn")
 	btn:SetVisible(false);
 	btn:SetChildrenVisible(false);
-	btn = owner:GetUIObject('music.loop.btn')
+	play_node = play_manager.get_config()
+	if play_node.file_mode == 'listloop' then
+		btn = owner:GetUIObject('music.single.btn')
+	else
+		btn = owner:GetUIObject('music.loop.btn')
+	end
+	
 	btn:SetVisible(false);
 	btn:SetChildrenVisible(false);
 	local Mananger = XLGetObject("Xunlei.UIEngine.TemplateManager")
@@ -360,7 +378,7 @@ function OnInitControl(self)
     	--动画响应函数
     	attr.func = OnTime;
     	--播放歌曲路径
-    	attr.playpath = "D:/Github/sbplayer/bin/2.mp3"
+    	attr.playpath = ""
     	owner:AddAnimation(instance)
         instance:Resume()
     end
@@ -374,15 +392,22 @@ function OnInitControl(self)
 		MainTree:GetUIObject('id.text.name'):SetText(play_node.file_name)
 		MainTree:GetUIObject("time.text.full"):SetText('00:00')
     end
-    local function UIPauseStatus()
+    local function UIPauseStatus(item)
     	local showbtn = MainTree:GetUIObject("music.pause.btn");
 		local hidebtn = MainTree:GetUIObject("music.play.btn");
-		showbtn:SetVisible(false);
-		showbtn:SetChildrenVisible(false);
-		hidebtn:SetVisible(true);
-		hidebtn:SetChildrenVisible(true);
+		if item.play_status == 'pause' then
+			showbtn:SetVisible(false);
+			showbtn:SetChildrenVisible(false);
+			hidebtn:SetVisible(true);
+			hidebtn:SetChildrenVisible(true);
+		else
+			showbtn:SetVisible(true);
+			showbtn:SetChildrenVisible(true);
+			hidebtn:SetVisible(false);
+			hidebtn:SetChildrenVisible(false);
+		end
     end
     play_manager.set_callback(UIPlayStatus, UIPauseStatus, nil, nil, nil)
-
+    
 end
 

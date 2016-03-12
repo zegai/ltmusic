@@ -36,10 +36,14 @@ function OnLButtonUp(self, x, y)
 		end
 		if attr.UseType == "progress" then
 			local oldbkg = self:GetControlObject("oldBkg");
+			local bkg = self:GetControlObject("bkg");
 			local pos = self:GetControlObject("PosCoin");
 			oldbkg:SetObjPos(0,0,x,"father.height")
 			pos:SetObjPos(x-10,-24,x+14,0)
-			--oldbkg:width = 0;
+			x1,_,x2,_ = bkg:GetObjPos();
+			if x > x1 and x < x2 then
+				self:FireExtEvent("OnPointChange", tonumber((x - x1)/(x2 - x1)*100))
+			end
 		end
 		self:SetCaptureMouse(false)
 		attr.NowState = 0;

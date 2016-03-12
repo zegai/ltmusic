@@ -175,7 +175,21 @@ int LuaMyClass::GetTime(lua_State* luaState)
 	lua_pushnil(luaState);
 	return 1;
 }
+int LuaMyClass::Volume(lua_State* luaState){
+	PlayMid<Mul_Node>** ppMyClass = 
+		reinterpret_cast<PlayMid<Mul_Node>**>(luaL_checkudata(luaState,1,MUSIC_LUA_CLASS));   
+	if(ppMyClass && (*ppMyClass))
+	{
+		int rhs = static_cast<int>(lua_tointeger(luaState,2));
 
+		Mul_Node node;
+		node.Mes_Type = VOLUME;
+		node.UserData.JumpPersent = rhs;
+		(*ppMyClass)->inslistNode(node);
+		return 0;     
+	}
+	return 0;
+}
 
 static XLLRTGlobalAPI LuaMyClassMemberFunctions[] = 
 {
@@ -187,6 +201,7 @@ static XLLRTGlobalAPI LuaMyClassMemberFunctions[] =
 	{"OpenFile",LuaMyClass::OpenFile},
 	{"GetPath",LuaMyClass::GetPath},
 	{"Init", LuaMyClass::Init},
+	{"Volume", LuaMyClass::Volume},
     {NULL,NULL}
 };
 

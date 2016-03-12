@@ -1,3 +1,4 @@
+local json = require('json')
 local play_status = {
 	curplay = 'nil',
 	curname = 'nil',
@@ -19,6 +20,17 @@ play_item_ = {
 }
 ]=]
 
+local play_node = {
+	file_name = '',
+	file_curtime = '',
+	file_fulltime = '',
+	file_status = 'stop',
+	file_path = '',
+	file_persent = 0,
+	file_volume = 100,
+	file_mode = 'singleloop' --listloop singleloop
+}
+
 local function def_callback()
 	return true
 end
@@ -39,11 +51,13 @@ local function pause_( item )
 		if play_status.curstatus == 'play' then
 			core:Pause();
 			play_status.curstatus = 'pause'
+			play_node.play_status = 'pause'
 		else
 			core:Play(1,"play");
 			play_status.curstatus = 'play'
+			play_node.play_status = 'play'
 		end
-		return play_status.pause_callback(item)
+		return play_status.pause_callback(play_node)
 	end
 	return false
 end
@@ -81,12 +95,57 @@ local function update_( item )
 	return false
 end
 
+local function volume_( item )
+	if core then
+		play_node.file_volume = item.file_volume
+		core:Volume(item.file_volume)
+	end
+end
+
+
+
+local function save_config_()
+	local fdate = 'config.json'
+	if core then
+		fdate = core:GetPath() .. fdate
+	end
+	local save = json.encode(play_node)
+	local f = assert(io.open(fdate, 'w+'))
+	if f == nil then  return end
+	f:write(save);
+	f:close();
+end
+
+local function load_config_()
+	local fdate = 'config.json'
+	local f = assert(io.open(fdate, 'a+b'))
+	if f == nil then  return end
+	local v = f:read('*all')
+	if string.len(v) ~= 0 then
+		play_node = json.decode(v)
+		f:close()
+		volume_(play_node)
+	else
+		f:close()
+		save_config_()
+	end
+	return play_node
+end
+
+local function get_memconfig_()
+	return play_node
+end
+
 local function set_call_(m_pPlay, m_pPause, m_pStop, m_pPersent, m_pLoad)
 	play_status.play_callback = m_pPlay or def_callback
 	play_status.pause_callback = m_pPause or def_callback
 	play_status.stop_callback = m_pStop or def_callback
 	play_status.persent_callback = m_pPersent or def_callback
 	play_status.load_callback = m_pLoad or def_callback
+end
+
+local function set_mode_(item)
+	play_node.play_mode = item.play_mode
 end
 play_status.play_callback = def_callback
 play_status.pause_callback = def_callback
@@ -104,6 +163,10 @@ manager.jump = persent_
 manager.load = load_
 manager.update = update_
 manager.set_callback = set_call_
-
+manager.volume = volume_
+manager.setmode = set_mode_
+manager.get_config = load_config_
+manager.save_config = save_config_
+manager.get_memconfig = get_memconfig_
 return manager
 

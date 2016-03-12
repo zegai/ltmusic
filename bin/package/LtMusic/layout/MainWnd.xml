@@ -208,7 +208,8 @@
 							<height>16</height>
 						</attr>
 						<eventlist>
-							<event name="OnClick" file="MainWnd.xml.lua" func="close_btn_OnLButtonDown"/>
+							<event name="OnClick" file="MainWnd.xml.lua" func="OnUserClick"/>
+							<event name="OnPointChange" file="MainWnd.xml.lua" func="OnPointChange"/>
 						</eventlist>
 					</obj>
 					<obj id="time.text.full" class="TextObject">
@@ -297,7 +298,7 @@
 							<HoverBkgID>menu.define.hover</HoverBkgID>
 						</attr>
 						<eventlist>
-							<event name="OnClick" file="MainWnd.xml.lua" func="save_items"/>
+							<event name="OnClick" file="MainWnd.xml.lua" func="show_define"/>
 						</eventlist>
 					</obj>
 					<obj id="music.single.btn" class="ltui.button">
@@ -376,12 +377,13 @@
 			<left>200</left> 
 			<top>100</top>
 			<width>650</width>
-			<height>420</height>
+			<height>220</height>
 			<topmost>0</topmost>
 			<visible>1</visible>
 			<enable>1</enable>
-			<maxbox>0</maxbox>
-			<minbox>0</minbox>
+			<maxbox>1</maxbox>
+			<minbox>1</minbox>
+			<sysmenu>1</sysmenu>
 			<minwidth>100</minwidth>
 			<minheight>72</minheight>
 			<maxwidth>1000</maxwidth>

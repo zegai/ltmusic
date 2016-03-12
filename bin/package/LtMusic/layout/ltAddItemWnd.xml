@@ -10,149 +10,96 @@
 		<obj id="ltAdd.root" class="TextureObject">
 			<attr>
 				<left>0</left>
-				<top>100</top>
-				<width>300</width>
+				<top>110</top>
+				<width>350</width>
 				<height>200</height>
 				<texture>bkg.border</texture>
+				<alpha>160</alpha>
 			</attr>
 			<children>
-				<obj id="id.bkg" class="TextureObject">
+				<obj id="id.captionobject" class="CaptionObject">
 					<attr>
 						<left>17</left>
-						<top>11</top>
-						<width>father.width-34</width>
-						<height>father.height-33</height>
+						<top>12</top>
+						<width>father.width - 33</width>
+						<height>30</height>
+						<zorder>10</zorder>
+					</attr>
+					
+				</obj>
+				<obj id="id.fill" class="FillObject">
+					<attr>
+						<left>17</left>
+						<top>12</top>
+						<width>father.width - 33</width>
+						<height>30</height>
+						<alpha>160</alpha>
+					</attr>
+				</obj>
+				<obj id="text.define" class="TextObject">
+					<attr>
+						<left>0</left>
+						<top>16</top>
+						<width>father.width</width>
+						<height>32</height>
+						<font>system.bottom</font>
+						<textcolor>ltblue</textcolor>
+						<halign>center</halign>
+						<text>设置</text>
+					</attr>
+				</obj>
+				<obj id="close.btn" class="ltui.button">
+					<attr>
+						<left>father.width - 46</left>
+						<top>12</top>
+						<width>28</width>
+						<height>28</height>
+						<NormalBkgID>menu.close.normal</NormalBkgID>
+						<DownBkgID>menu.close.down</DownBkgID>
+						<DisableBkgID>menu.close.disable</DisableBkgID>
+						<HoverBkgID>menu.close.hover</HoverBkgID>
+						<zorder>1000</zorder>
+					</attr>
+					<eventlist>
+						<event name="OnClick" file="ltAddItemWnd.xml.lua" func="OnClose"/>
+					</eventlist>
+				</obj>
+				<obj id="id.bkg" class="ImageObject">
+					<attr>
+						<left>17</left>
+						<top>40</top>
+						<width>father.width-33</width>
+						<height>father.height-62</height>
 						<!--资源相关的属性使用资源定义xml中设置的资源名-->
-						<texture>main.left.bkg</texture>
+						<image>define.bkg</image>
+					
+						<limitchild>1</limitchild>
 					</attr>
 					<children>
-						<obj id="id.captionobject" class="CaptionObject">
-							<attr>
-								<left>0</left>
-								<top>0</top>
-								<width>father.width</width>
-								<height>father.height</height>
-								<zorder>-1000</zorder>
-							</attr>
-						</obj>
-						<obj id="close.btn" class="MakeNew.button">
-							<attr>
-								<left>father.width - 30</left>
-								<top>0</top>
-								<width>28</width>
-								<height>28</height>
-								<NormalBkgID>menu.close.normal</NormalBkgID>
-								<DownBkgID>menu.close.down</DownBkgID>
-								<DisableBkgID>menu.close.disable</DisableBkgID>
-								<HoverBkgID>menu.close.hover</HoverBkgID>
-							</attr>
-							<eventlist>
-								<event name="OnClick" file="ltAddItemWnd.xml.lua" func="OnClose"/>
-							</eventlist>
-						</obj>
-						
 						<obj id="text" class="TextObject">
 							<attr>
-								<left>10</left>
-								<top>5</top>
-								<width>80</width>
-								<height>22</height>
-								<font>system.left.defult</font>
-								<textcolor>system.white</textcolor>
-								<text>添加</text>
-							</attr>
-						</obj>
-						
-						<!-- 账号ID -->
-						<obj id="id.zhanghaobkg" class="TextureObject">
-							<attr>
-								<left>50</left>
-								<top>50</top>
-								<width>125</width>
-								<height>7</height>
-								<texture>login.shuru</texture>
-							</attr>
-						</obj>
-						
-						<obj id="id.inputedit" class="EditObject">
-							<attr>
-								<left>55</left>
-								<top>37</top>
-								<width>100</width>
-								<height>24</height>
-								<font>system.bottom</font>
-								<textcolor>system.white</textcolor>
-								<transparent>1</transparent>
-							</attr>
-							<eventlist>
-								
-							</eventlist>
-						</obj>
-						
-						<obj id="id.input" class="TextObject">
-							<attr>
-								<left>18</left>
-								<top>42</top>
-								<width>50</width>
-								<height>24</height>
-								<font>system.bottom</font>
-								<textcolor>system.white</textcolor>
-								<text>字段:</text>
-							</attr>
-						</obj>
-					
-						<!-- 密码 -->
-						<obj id="id.mimabkg" class="TextureObject">
-							<attr>
-								<left>50</left>
-								<top>100</top>
-								<width>125</width>
-								<height>7</height>
-								<texture>login.shuru</texture>
-							</attr>
-						</obj>
-						
-						<obj id="id.input" class="TextObject">
-							<attr>
-								<left>5</left>
-								<top>92</top>
-								<width>50</width>
-								<height>24</height>
-								<font>system.bottom</font>
-								<textcolor>system.white</textcolor>
-								<text>默认值:</text>
-							</attr>
-						</obj>
-
-						<obj id="id.valueedit" class="EditObject">
-							<attr>
-								<left>55</left>
-								<top>87</top>
-								<width>100</width>
-								<height>24</height>
-								<font>system.bottom</font>
-								<textcolor>system.white</textcolor>
-								<transparent>1</transparent>
-							</attr>
-							<eventlist>
-								
-							</eventlist>
-						</obj>
-						<obj id="add.btn" class="MakeNew.button">
-							<attr>
-								<left>200</left>
-								<top>55</top>
+								<left>20</left>
+								<top>36</top>
 								<width>40</width>
-								<height>40</height>
-								<NormalBkgID>menu.add.normal</NormalBkgID>
-								<DownBkgID>menu.add.down</DownBkgID>
-								<DisableBkgID>menu.add.disable</DisableBkgID>
-								<HoverBkgID>menu.add.hover</HoverBkgID>
+								<height>22</height>
+								<font>system.bottom</font>
+								<textcolor>system.white</textcolor>
+								<text>音量:</text>
+							</attr>
+						</obj>
+						<obj id="music.scoller" class="ltui.UserScroll">
+							<attr>
+								<left>70</left>
+								<top>38</top>
+								<width>200</width>
+								<height>16</height>
 							</attr>
 							<eventlist>
-								<event name="OnClick" file="ltAddItemWnd.xml.lua" func="OnAddClick"/>
+								<event name="OnClick" file="ltAddItemWnd.xml.lua" func="OnUserClick"/>
+								<event name="OnPointChange" file="ltAddItemWnd.xml.lua" func="OnPointChange"/>
 							</eventlist>
 						</obj>
+						
 					</children>
 				</obj>
 			</children>

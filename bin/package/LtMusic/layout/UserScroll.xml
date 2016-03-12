@@ -35,7 +35,12 @@
 			<!-- 定义一个自定义事件，这样按钮的使用者就可以连这个逻辑事件-->
 			<OnClick />
 			<!-- 定义滚动条改变事件 -->
-			<OnPosChange />
+			<OnPointChange>
+				<param>
+					<uint />
+				</param>
+				<return></return>
+			</OnPointChange>
 		</event_def>
     <objtemplate>
 	<children>

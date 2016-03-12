@@ -21,12 +21,14 @@ public:
 	virtual void Audio_Stop();
 	virtual void Audio_Release();
 	virtual void Audio_Init();
+	virtual void Audio_Volume(unsigned persent);
 	//virtual bool Audio_Handle_Status();
 protected:
 	handle_type type;
 public:
 	unsigned Sec_;
 	unsigned Cur_;
+	unsigned Volume_;
 	LTSTRING* Cur_Path_;
 };
 
@@ -44,5 +46,6 @@ public:
 	void Audio_Stop();
 	void Audio_Release();
 	void Audio_Init();
+	void Audio_Volume(unsigned persent);
 	//bool Audio_Handle_Status();
 };

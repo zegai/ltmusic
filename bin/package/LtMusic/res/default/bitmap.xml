@@ -13,6 +13,7 @@
 	<texture id="vscoll.use" type="ThreeInOneV" path="bitmap\gundongtiao\gdtv.hover.png" />
 
 	<bitmap id="main.bkg" path="bitmap\tmpbkg.png"/>
+	<bitmap id="define.bkg" path="bitmap\define.png"/>
 	<bitmap id="main.left.touxiang.mask" path="bitmap\main.left.touxiang.mask.png" />
 	<bitmap id="ceshi" path="bitmap\mask_toux.png"  />
 	<bitmap id="main.left.touxiang.bkg" path="bitmap\main.left.touxiang.bkg.png" />
