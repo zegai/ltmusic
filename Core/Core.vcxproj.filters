@@ -39,6 +39,12 @@
     <ClInclude Include="AudioPlay.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="AudioFactory.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="bassflac.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -60,6 +66,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="AudioPlay.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioFactory.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

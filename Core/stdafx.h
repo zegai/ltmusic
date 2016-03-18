@@ -18,6 +18,7 @@
 #include <tchar.h>
 #include <queue>
 #include "bass.h"
+#include "bassflac.h"
 #include <mmsystem.h>
 #pragma comment(lib, "winmm.lib")
 #ifdef _UNICODE

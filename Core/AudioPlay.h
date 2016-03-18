@@ -5,6 +5,12 @@ union handle_type{
 	HSTREAM BassType;
 };
 
+enum MUSICTYPE{
+	NONE,
+	MP3,
+	FLAC
+};
+
 class AudioPlay
 {
 public:
@@ -25,10 +31,13 @@ public:
 	//virtual bool Audio_Handle_Status();
 protected:
 	handle_type type;
+	virtual AudioPlay& operator= (AudioPlay& audio){return *this;};
+	AudioPlay(AudioPlay& audio){};
 public:
 	unsigned Sec_;
 	unsigned Cur_;
 	unsigned Volume_;
+	MUSICTYPE mtype;
 	LTSTRING* Cur_Path_;
 };
 
@@ -48,4 +57,14 @@ public:
 	void Audio_Init();
 	void Audio_Volume(unsigned persent);
 	//bool Audio_Handle_Status();
+};
+
+class FLACBASSPlay : public BASSPlay
+{
+public:
+	FLACBASSPlay(){};
+	~FLACBASSPlay(){};
+public:
+	bool Audio_Open(LTSTRING* strpath);
+	bool Audio_GetInfo(DWORD reg,const TCHAR* path,OUT DWORD& str);
 };

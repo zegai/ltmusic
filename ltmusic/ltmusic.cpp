@@ -107,6 +107,7 @@ int APIENTRY _tWinMain(HINSTANCE hInstance,
 
 	LoadLibrary(TEXT("Core.dll"));
 	LoadLibrary(TEXT("bass.dll"));
+	LoadLibrary(TEXT("bassflac.dll"));
 	if(!LoadMainXAR())
 	{
 		MessageBoxW(NULL,L"Load XARÊ§°Ü!",L"´íÎó",MB_OK);

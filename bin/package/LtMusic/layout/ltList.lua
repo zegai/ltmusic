@@ -152,7 +152,7 @@ function Trun_Pre( self , item)
 	if user_set_._item_count == 0 then return nil end
 	local count = manager.get_item_index( user_set_._local_click )
 	if count == 1 then
-		local item_V_ = manager.get_item(1)
+		local item_V_ = manager.get_item(user_set_._item_count)
 		user_set_._local_click = item_V_.item_id_
 		return item_V_.item_user_
 	end

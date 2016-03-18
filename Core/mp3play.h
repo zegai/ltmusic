@@ -1,7 +1,7 @@
 #pragma once
 
 #include "stdafx.h"
-#include "AudioPlay.h"
+#include "AudioFactory.h"
 #include "../core/Log.h"
 
 
@@ -131,11 +131,9 @@ public:
 	#define IN
 	static bool GetMusicInfo(DWORD reg,const TCHAR* path,OUT DWORD& str);
 protected:
-	explicit MusicControl():
-	Current_Type_(STOP_T)
-	{
+	explicit MusicControl():audio(NULL),
+	Current_Type_(STOP_T){
 		Queue_Instance_ = PlayMid<Mul_Node>::GetInstance();
-		audio = new BASSPlay();
 	};
 	MusicControl(AudioPlay* paudio):audio(paudio),Current_Type_(STOP_T){
 		Queue_Instance_ = PlayMid<Mul_Node>::GetInstance();

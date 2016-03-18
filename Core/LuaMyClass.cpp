@@ -121,7 +121,7 @@ int LuaMyClass::OpenFile(lua_State* luaState)
 		OPENFILENAME opfn;
 		memset(&opfn, 0, sizeof(opfn));
 		opfn.lStructSize = sizeof(OPENFILENAME);
-		opfn.lpstrFilter = _T("MP3文件\0*.mp3\0");
+		opfn.lpstrFilter = _T("MP3文件\0*.mp3\0FLAC文件\0*.flac\0");
 		opfn.nFilterIndex = 1;
 
 		TCHAR path[100] = {0};

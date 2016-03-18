@@ -9,6 +9,14 @@ void MusicControl::MusicPlay(Mul_Node &Node)
 	if (Node.UserData.play.playflag == 0 && 
 		audio->Cur_Path_->compare(Node.UserData.play.ltstring->c_str())){
 		audio->Audio_Stop();
+		TCHAR ext[48];
+		_tsplitpath(Node.UserData.play.ltstring->c_str(), NULL, NULL, NULL, ext);
+		if(AudioFactory::CreateInstance()->CheckAudioType(ext) != audio->mtype){
+			AudioPlay* NewAudio = AudioFactory::CreateInstance()->CreateAudioStream(ext);
+			NewAudio->Volume_ = audio->Volume_;
+			delete audio;
+			audio = NewAudio;
+		}
 		audio->Audio_Open(Node.UserData.play.ltstring);
 		audio->Audio_Volume(audio->Volume_);
 		audio->Audio_Play();
@@ -44,6 +52,9 @@ MusicControl::MusicJump(Mul_Node &Node){
 void 
 MusicControl::MusicInit(Mul_Node &Node)
 {
+	if(!audio){
+		audio = AudioFactory::CreateInstance()->CreateAudioStream(_T(".mp3"));
+	}
 	audio->Audio_Init();
 
 }
@@ -68,7 +79,12 @@ MusicControl::MusicGetCurTime()
 bool
 MusicControl::GetMusicInfo(DWORD reg,const TCHAR* path,OUT DWORD& str)
 {
-	return MusicControl::GetInstance()->audio->Audio_GetInfo(reg, path, str);
+	TCHAR ext[48];
+	_tsplitpath(path, NULL, NULL, NULL, ext);
+	AudioPlay* audio = AudioFactory::CreateInstance()->CreateAudioStream(ext);
+	bool r = audio->Audio_GetInfo(reg, path, str);
+	delete audio;
+	return r;
 }
 
 DWORD WINAPI 

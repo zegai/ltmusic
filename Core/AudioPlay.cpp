@@ -2,14 +2,13 @@
 #include "AudioPlay.h"
 
 AudioPlay::AudioPlay(void):Sec_(0),
-	Cur_(0),Volume_(100)
-{
+	Cur_(0),Volume_(100){
 	Cur_Path_ = new LTSTRING(_T("NULL"));
 }
 
 
-AudioPlay::~AudioPlay(void)
-{
+AudioPlay::~AudioPlay(void){
+	Audio_Release();
 }
 
 void AudioPlay::Audio_Init(){
@@ -142,7 +141,7 @@ void AudioPlay::Audio_Volume(unsigned persent){
 }
 
 void AudioPlay::Audio_Release(){
-
+	if(Cur_Path_){ delete Cur_Path_; }
 }
 
 
@@ -150,7 +149,9 @@ void AudioPlay::Audio_Release(){
 BASSPlay::BASSPlay(void){
 	type.BassType = 0;
 }
-BASSPlay::~BASSPlay(void){}
+BASSPlay::~BASSPlay(){
+	Audio_Release();
+}
 
 bool BASSPlay::Audio_Open(LTSTRING* strpath){
 	type.BassType = BASS_StreamCreateFile(FALSE,strpath->c_str(),0,0,0);
@@ -166,7 +167,6 @@ bool BASSPlay::Audio_Open(LTSTRING* strpath){
 }
 
 bool BASSPlay::Audio_GetInfo(DWORD reg,const TCHAR* path,OUT DWORD& str){
-	BOOL r = BASS_Init(-1,44100,0,0,NULL);
 	HSTREAM BassType = BASS_StreamCreateFile(FALSE,path,0,0,0);
 	QWORD len = BASS_ChannelGetLength(BassType,BASS_POS_BYTE);
 	str = (DWORD)BASS_ChannelBytes2Seconds(BassType, len)*1000;
@@ -198,7 +198,9 @@ void BASSPlay::Audio_Stop(){
 }
 
 void BASSPlay::Audio_Release(){
-
+	BASS_ChannelStop(type.BassType);
+	BASS_StreamFree(type.BassType);
+	//BASS_Free();
 }
 
 void BASSPlay::Audio_Volume(unsigned persent){
@@ -212,3 +214,23 @@ void BASSPlay::Audio_Jump(unsigned persent){
 	BOOL t = BASS_ChannelSetPosition(type.BassType, len, BASS_POS_BYTE);
 }
 
+bool FLACBASSPlay::Audio_Open(LTSTRING* strpath){
+	type.BassType = BASS_FLAC_StreamCreateFile(FALSE,strpath->c_str(),0,0,0);
+	if( !type.BassType ){
+		return false;
+	}
+	DWORD len = (DWORD)BASS_ChannelGetLength(type.BassType,BASS_POS_BYTE);
+	Sec_ = (unsigned int)BASS_ChannelBytes2Seconds(type.BassType, len)*1000; 
+	if(Cur_Path_)
+		delete Cur_Path_;
+	Cur_Path_ = new LTSTRING(strpath->c_str());
+	return true;
+}
+
+bool FLACBASSPlay::Audio_GetInfo(DWORD reg,const TCHAR* path,OUT DWORD& str){
+	HSTREAM BassType = BASS_FLAC_StreamCreateFile(FALSE,path,0,0,0);
+	QWORD len = BASS_ChannelGetLength(BassType,BASS_POS_BYTE);
+	str = (DWORD)BASS_ChannelBytes2Seconds(BassType, len)*1000;
+	BASS_StreamFree(BassType);
+	return true;
+}
