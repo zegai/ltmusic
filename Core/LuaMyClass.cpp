@@ -123,29 +123,63 @@ int LuaMyClass::OpenFile(lua_State* luaState)
 		opfn.lStructSize = sizeof(OPENFILENAME);
 		opfn.lpstrFilter = _T("MP3文件\0*.mp3\0FLAC文件\0*.flac\0");
 		opfn.nFilterIndex = 1;
-
-		TCHAR path[100] = {0};
+		TCHAR head[MAX_PATH] = {0};
+		TCHAR path[8*MAX_PATH] = {0};
 		opfn.lpstrFile = path;
 		opfn.nMaxFile = sizeof(path);
-		opfn.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST;
+		opfn.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_EXPLORER | OFN_ALLOWMULTISELECT;
 		if(GetOpenFileName(&opfn)){
-			TCHAR Name[_MAX_FNAME] = {0};
-			_tsplitpath_s(path, NULL, 0, NULL, 0, Name, _MAX_FNAME, NULL, 0);
-			
-			#ifdef _UNICODE
+			lstrcpyn(head, path, opfn.nFileOffset );
+			if(path[opfn.nFileOffset - 1] != 0){
+				//单文件
+				TCHAR Name[_MAX_FNAME] = {0};
+				_tsplitpath_s(path, NULL, 0, NULL, 0, Name, _MAX_FNAME, NULL, 0);
+#ifdef _UNICODE
 				std::string retv;
 				Unicode_to_UTF8(path, ::wcslen(path), retv);
 				lua_pushstring(luaState, retv.c_str());
 				Unicode_to_UTF8(Name, ::wcslen(Name), retv);
 				lua_pushstring(luaState, retv.c_str());
-			#else
+#else
 				lua_pushstring(luaState, (char*)(path));
 				lua_pushstring(luaState, (char*)(Name));
-			#endif
-			
-			DWORD value = 0;
-			MusicControl::GetMusicInfo(MCI_STATUS_LENGTH, path, value);
-			lua_pushnumber(luaState, value);
+#endif
+				DWORD value = 0;
+				MusicControl::GetMusicInfo(MCI_STATUS_LENGTH, path, value);
+				lua_pushnumber(luaState, value);
+			}else{
+				//多文件
+				TCHAR* point_t = &path[opfn.nFileOffset];
+				
+				head[opfn.nFileOffset - 1] = _T('/0');
+				lua_newtable(luaState);
+				int i = 1;
+				while( *point_t ){
+					std::string retv;
+					TCHAR filenode[MAX_PATH] = {0};
+					lua_newtable(luaState);
+					lstrcat(filenode, head);
+					lstrcat(filenode, point_t);
+					Unicode_to_UTF8(filenode, ::wcslen(filenode), retv);
+					lua_pushstring(luaState, retv.c_str());
+					lua_setfield(luaState, -2, "path");
+					TCHAR Name[_MAX_FNAME] = {0};
+					_tsplitpath_s(filenode, NULL, 0, NULL, 0, Name, _MAX_FNAME, NULL, 0);
+					Unicode_to_UTF8(Name, ::wcslen(Name), retv);
+					lua_pushstring(luaState, retv.c_str());
+					lua_setfield(luaState, -2, "name");
+					DWORD value = 0;
+					MusicControl::GetMusicInfo(MCI_STATUS_LENGTH, filenode, value);
+					lua_pushnumber(luaState, value);
+					lua_setfield(luaState, -2, "time");
+					lua_rawseti(luaState, -2, i);
+					i ++;
+					point_t += lstrlen(point_t) + 1;
+				}
+				lua_pushnil(luaState);
+				lua_pushnil(luaState);
+				return 3;
+			}
 			return 3;
 		}
 	}

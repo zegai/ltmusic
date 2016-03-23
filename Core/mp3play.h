@@ -134,6 +134,7 @@ protected:
 	explicit MusicControl():audio(NULL),
 	Current_Type_(STOP_T){
 		Queue_Instance_ = PlayMid<Mul_Node>::GetInstance();
+		//audio = AudioFactory::CreateInstance()->CreateAudioStream(_T("mp3"));
 	};
 	MusicControl(AudioPlay* paudio):audio(paudio),Current_Type_(STOP_T){
 		Queue_Instance_ = PlayMid<Mul_Node>::GetInstance();

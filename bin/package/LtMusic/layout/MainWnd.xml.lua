@@ -175,6 +175,17 @@ function add_item(self)
 	lattr.DataFlag = "INSERT";
 
 	local path,name,len = play_manager:load()
+	if type(path) == 'table' then
+		for k, v in ipairs(path) do
+			local min = math.modf(v.time/60000);
+			local sec = math.modf((v.time/1000)%60);
+			if sec < 10 then
+				sec = '0' .. sec
+			end
+			lc:AddItem{item_head_ = v.name, item_text_ = min .. ":" .. sec , item_path_ = v.path}
+		end
+		return 
+	end
 	if path ~= nil and name ~= nil then
 		local min = math.modf(len/60000);
 		local sec = math.modf((len/1000)%60);
